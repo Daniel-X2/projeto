@@ -36,7 +36,7 @@ namespace api
         }
         
     }
-    class Exec
+    class Exec:repository_client
     {
 
         public static void aMain()
@@ -46,6 +46,8 @@ namespace api
             var app = builder.Build();
             Routers.Router_Home(app);
             app.Run();
+            
+            
             
         }
     }

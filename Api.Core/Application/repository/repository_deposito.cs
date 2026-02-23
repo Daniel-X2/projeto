@@ -1,12 +1,12 @@
 using static System.Console;
 using Npgsql;
-using Xunit;
+
 
 class deposito(IConnect host)
 {
    
     
-    internal  async Task<tipos> get_produto()
+    internal  async Task<ListaProduto> get_produto()
     {
         
        await using NpgsqlConnection connect=host.Connect();;
@@ -14,7 +14,7 @@ class deposito(IConnect host)
 
         await using var cmd = new NpgsqlCommand("SELECT * FROM produto",connect);
        await using var read= await  cmd.ExecuteReaderAsync();
-        tipos lista=new();
+        ListaProduto lista=new();
         
         while (await read.ReadAsync())
         {
@@ -24,11 +24,11 @@ class deposito(IConnect host)
             campos.quantidade=(int)read["quantidade"];
             campos.valor_revenda=(float)read["valor_revenda"];
             campos.lote=(int)read["lote"];
-            lista.lista_produto.Add(campos);
+            lista.lista_prod.Add(campos);
         }
       return lista;
      }
-    internal  async Task<tipos> get_estoque()
+    internal  async Task<ListaProduto> get_estoque()
     {
        
        await using NpgsqlConnection connect=host.Connect();
@@ -36,14 +36,14 @@ class deposito(IConnect host)
 
         var cmd=new NpgsqlCommand("SELECT nome,quantidade FROM produto",connect);
         var read=await cmd.ExecuteReaderAsync();
-        tipos lista=new();
+        ListaProduto lista=new();
         while(await read.ReadAsync())
         {
             produto campos=new();
             campos.nome=(string)read["nome"];
             campos.quantidade=(int)read["quantidade"];
 
-            lista.lista_produto.Add(campos);
+            lista.lista_prod.Add(campos);
         }
         return lista;
     }

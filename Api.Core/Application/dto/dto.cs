@@ -1,11 +1,16 @@
 
 
-class tipos//esse aqui e o dto do repository client subsituir o task<list<>>
+class ListaClient//esse aqui e o dto do repository client subsituir o task<list<>>
 {
-    
     public List<client> lista_client {get;set;}= new List<client>();
-    public List<funcionario> lista_funcionario {get;set;}= new List<funcionario>();
-    public List<produto> lista_produto {get;set;}=new List<produto>();
+}
+class ListaFuncionario
+{
+    public List<funcionario> lista_funci {get;set;}= new List<funcionario>();
+}
+class ListaProduto
+{
+     public List<produto> lista_prod {get;set;}=new List<produto>();
 }
 class client
 {

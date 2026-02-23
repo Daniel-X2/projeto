@@ -15,7 +15,7 @@ public class test_produto
         var n1= await repo.get_produto();
 
        await repo.delete_produto("teste");
-        Assert.NotEqual(0,n1.lista_produto[0].nome.Length);
+        Assert.NotEqual(0,n1.lista_prod[0].nome.Length);
     }
     [Fact]
     public static async Task test_add_produto()
@@ -72,7 +72,7 @@ public class test_produto
         var resultado= await repo.get_estoque();
         await repo.delete_produto(produto);
 
-        Assert.NotEqual(0,resultado.lista_produto[0].nome.Length);
+        Assert.NotEqual(0,resultado.lista_prod[0].nome.Length);
        
         
     }

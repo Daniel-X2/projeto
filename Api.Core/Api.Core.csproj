@@ -10,7 +10,7 @@
     <_Parameter1>Api.test</_Parameter1>
   </AssemblyAttribute>
   <PackageReference Include="Npgsql" Version="10.0.1" />
-  <PackageReference Include="xunit.v3" Version="3.2.2" />
+  
 </ItemGroup>
 
 </Project>

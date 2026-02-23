@@ -59,7 +59,7 @@ public class test_funcionario
 
        var resultado= await repo.Get_funcionario();
        await repo.delete_funcionario(nome);
-       Assert.NotEqual(0,resultado.lista_funcionario[0].nome.Length);
+       Assert.NotEqual(0,resultado.lista_funci[0].nome.Length);
        
        
        

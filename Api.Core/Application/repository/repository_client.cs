@@ -5,7 +5,7 @@ class repository_client(IConnect host)
 {
     
     
-    internal  async Task<tipos> Get_client()
+    internal  async Task<ListaClient> Get_client()
     {
 
         
@@ -16,7 +16,7 @@ class repository_client(IConnect host)
         
         await using var cmd = new NpgsqlCommand("SELECT * FROM cliente", connect);
        
-        tipos lista=new();
+        ListaClient lista=new();
         
         await using var reader = await cmd.ExecuteReaderAsync();
         while(await reader.ReadAsync())
@@ -50,7 +50,27 @@ class repository_client(IConnect host)
         
         return resultado;
     }  
-    
+    internal async Task<bool> VerificarConta(int conta)
+    {
+        await using NpgsqlConnection connect=host.Connect();
+        await connect.OpenAsync();
+        string sql="SELECT EXISTS (SELECT 1 FROM cliente WHERE conta=@conta)";
+        await using var cmd=new NpgsqlCommand(sql,connect);
+        cmd.Parameters.AddWithValue("conta",conta);
+       bool resultado=(bool) await cmd.ExecuteScalarAsync();
+       return resultado;
+       
+    }
+    internal async Task<bool> VerificarCpf(string cpf)
+    {
+        await using NpgsqlConnection connect =host.Connect();
+        await connect.OpenAsync();
+        string sql ="SELECT EXISTS (SELECT 1 FROM cliente WHERE cpf=@cpf)";
+        await using var cmd=new NpgsqlCommand(sql,connect);
+        cmd.Parameters.AddWithValue("cpf",cpf);
+        bool resultado=(bool) await cmd.ExecuteScalarAsync();
+        return resultado;
+    }
     internal  async Task<int> atualizar_client(string antigo_nome,string novo_nome)
     {
         

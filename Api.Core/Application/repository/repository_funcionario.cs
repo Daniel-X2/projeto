@@ -6,7 +6,7 @@ using Npgsql;
 class repository_funcionario(IConnect host)
 {
     
-    internal async Task<tipos> Get_funcionario()
+    internal async Task<ListaFuncionario> Get_funcionario()
     {
         
         await using NpgsqlConnection connect=host.Connect();
@@ -15,7 +15,7 @@ class repository_funcionario(IConnect host)
         
         await using var cmd = new NpgsqlCommand("SELECT * FROM funcionario", connect);
        
-        tipos lista=new();
+        ListaFuncionario lista=new();
 
         await using var reader = await cmd.ExecuteReaderAsync();
         while(await reader.ReadAsync())
@@ -26,7 +26,7 @@ class repository_funcionario(IConnect host)
             campos.isadmin=(bool)reader["isadmin"];
             campos.quantidade_atestado=(int)reader["quantidade_atestado"];
             campos.nascimento=(int)reader["nascimento"];
-            lista.lista_funcionario.Add(campos);
+            lista.lista_funci.Add(campos);
         }
          
         return lista;

@@ -5,9 +5,8 @@ namespace Dto
     {
         public List<ClientDto> lista_client {get;set;}= new List<ClientDto>();
     }
-}
-
-class ListaFuncionario
+    
+public class ListaFuncionario
 {
     public List<FuncionarioDto> lista_funci {get;set;}= new List<FuncionarioDto>();
 }
@@ -23,7 +22,7 @@ public class ClientDto
     public bool isvip{get;set;}
     
 }
-class FuncionarioDto
+public class FuncionarioDto
 {
     public string nome{get;set;}
     public string cpf{get;set;}
@@ -36,6 +35,7 @@ public class ProdutoDto
     public string nome{get;set;}
     public int codigo{get;set;}
     public int quantidade{get;set;}
-    public double valor_revenda{get;set;}
+    public float valor_revenda{get;set;}
     public int lote{get;set;}
+}
 }

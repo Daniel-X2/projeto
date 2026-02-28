@@ -26,7 +26,7 @@ internal class  Host:IConnect
         string  file = FileHost();
         return new NpgsqlConnection (file);        
     }
-    public static void Main(){}
+  
     
 }
 

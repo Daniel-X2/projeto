@@ -1,18 +1,21 @@
-using static System.Console;
-using Npgsql;
 
-public interface IDeposito
+using Npgsql;
+using Dto;
+
+namespace Api.core.Application.repository
+{
+    public interface IRepositoryProduct
 {
     internal Task<ListaProduto> GetAllProduct();
     internal Task<ListaProduto> GetEstoque();
     internal  Task<List<float>> GetValorBruto();
     internal  Task<int> AddProduct(ProdutoDto campos);
-    internal  Task<int> UpdateProduct(ProdutoDto campos);
+    internal Task<int> UpdateProduct(ProdutoDto campos, int id);
     internal  Task<int> DeleteProduct(int id);
    internal Task<ProdutoDto> GetProductById(int id);
 
 }
-class Deposito(IConnect host):IDeposito
+class RepositoryProduct(IConnect host):IRepositoryProduct
 {
     public  async Task<ProdutoDto> GetProductById(int id)
     {
@@ -36,7 +39,27 @@ class Deposito(IConnect host):IDeposito
          
         return campos;
     }
-    
+
+    public async Task<bool> IsExistLote(int lote)
+    {
+        await using NpgsqlConnection connect = host.Connect();
+        await connect.OpenAsync();
+
+        await using var cmd = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM produto WHERE lote=@lote)",connect);
+        cmd.Parameters.AddWithValue("lote", lote); 
+        bool resultado=(bool) await cmd.ExecuteScalarAsync();
+        return resultado;
+    }
+    public async Task<bool> IsExistCode(int codigo)
+    {
+       await using NpgsqlConnection connect = host.Connect();
+       await connect.OpenAsync();
+
+       await using var cmd = new NpgsqlCommand("SELECT EXISTS (SELECT 1 FROM produto WHERE codigo=@codigo)",connect);
+       cmd.Parameters.AddWithValue("codigo", codigo); 
+       bool resultado=(bool) await cmd.ExecuteScalarAsync();
+       return resultado;
+    }
    public  async Task<ListaProduto> GetAllProduct()
     {
         
@@ -89,7 +112,6 @@ class Deposito(IConnect host):IDeposito
         List<float> lista=new();
         while(await read.ReadAsync())
         {
-
             lista.Add((float)read["valor_revenda"]);
         }
         return lista;
@@ -110,7 +132,7 @@ class Deposito(IConnect host):IDeposito
         return resultado;
 
     }
-    public async Task<int> UpdateProduct(ProdutoDto campos)
+    public async Task<int> UpdateProduct(ProdutoDto campos,int id)
     {
         
       await using  NpgsqlConnection connect= host.Connect();
@@ -122,6 +144,7 @@ class Deposito(IConnect host):IDeposito
        cmd.Parameters.AddWithValue("lote",campos.lote);
        cmd.Parameters.AddWithValue("quantidade",campos.quantidade);
        cmd.Parameters.AddWithValue("valor_revenda",campos.valor_revenda);
+       cmd.Parameters.AddWithValue("id", id);
        int resultado= await cmd.ExecuteNonQueryAsync();
 
        return resultado;
@@ -136,4 +159,8 @@ class Deposito(IConnect host):IDeposito
        int resultado= await cmd.ExecuteNonQueryAsync();
        return resultado;
     }
+
+    
+    
+}
 }

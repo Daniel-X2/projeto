@@ -11,13 +11,12 @@ public interface  IRepositoryClient
    internal Task<bool> ContaExiste(int conta);
    internal Task<bool> CpfExiste(string cpf);
    internal Task<int> UpdateClient(ClientDto campos, int id);
-   internal Task<int> delete(int id);
+   internal Task<int> DeleteClient(int id);
    internal Task<int> GetIdByCpf(string cpf);
 
 }
 internal class RepositoryClient(IConnect host):IRepositoryClient
 {
-    
     
     public async Task<ListaClient>  GetAllClient()
     {
@@ -127,7 +126,7 @@ internal class RepositoryClient(IConnect host):IRepositoryClient
         
          return  resultado;
     }
-    public  async Task<int> delete(int id)
+    public  async Task<int> DeleteClient(int id)
     {
         int resultado;
         
@@ -145,7 +144,8 @@ internal class RepositoryClient(IConnect host):IRepositoryClient
         return resultado ;
         
         
-    }public  async Task<int> GetIdByCpf(string cpf)
+    }
+    public  async Task<int> GetIdByCpf(string cpf)
     {
         await using NpgsqlConnection connect=host.Connect(); 
         

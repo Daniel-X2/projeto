@@ -7,10 +7,12 @@ namespace Utils
    
     public bool IsValidDigit(string cpf)
     {
+        
         if (string.IsNullOrWhiteSpace(cpf))
         {
-            return false;
+            throw new InvalidCpfException(cpf);
         }
+        
         string CPF=null;
         for (int c=0;c<cpf.Length;c++ )
         {
@@ -19,26 +21,26 @@ namespace Utils
                 CPF=$"{CPF}{cpf[c]}";
             }
         }
-
         cpf = CPF;
-        if (cpf.Length == 11)
+        
+        if (cpf.Length != 11)
         {
-            
-            int.TryParse(cpf[9].ToString(),out int digito1);
-            int.TryParse(cpf[10].ToString(),out int digito2);
-            //int digito2=cpf[10];
-            cpf=cpf.Substring(0,9);
-            int resultado1 = 0+CpfEtapa1(cpf);
-            
-            int resultado2 = CpfEtapa2(cpf, resultado1);
-            if (resultado1 == digito1 && resultado2 == digito2)
-            {
-                return true;
-            }
-             return false;
+            throw new InvalidCpfException(cpf);
         }
-       //aqui deve gerar uma exception
-       return false;
+        int.TryParse(cpf[9].ToString(),out int digito1);
+        int.TryParse(cpf[10].ToString(),out int digito2);
+            
+        cpf=cpf.Substring(0,9);
+        int resultado1 = 0+CpfEtapa1(cpf);
+            
+        int resultado2 = CpfEtapa2(cpf, resultado1);
+        if (resultado1 != digito1 && resultado2 != digito2)
+        {
+            throw new InvalidCpfException(cpf);
+        }
+        return true;
+        
+        
     }
     public bool VerificarNome(string nome)
     {
@@ -49,7 +51,7 @@ namespace Utils
 
         return true;
     }
-
+    
     public int CpfEtapa1(string cpf)
     {
         if (cpf.Length == 9)

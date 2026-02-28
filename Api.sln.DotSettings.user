@@ -6,4 +6,5 @@
     &lt;TestId&gt;xUnit::45FE524D-13F5-4DBE-82DB-595EB64F7EC8::net8.0::Test_client&lt;/TestId&gt;
     &lt;TestId&gt;xUnit::45FE524D-13F5-4DBE-82DB-595EB64F7EC8::net8.0::Test&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/UnloadedProject/UnloadedProjects/=45fe524d_002D13f5_002D4dbe_002D82db_002D595eb64f7ec8_0023Api_002Etest/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
